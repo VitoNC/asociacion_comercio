@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 
     "blog",
     "contacto",
+    "noticias",
 
     "home",
     "search",
