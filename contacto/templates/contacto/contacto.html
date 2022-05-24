@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+
+{% load wagtailcore_tags %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row justify-content-center title-block-text">
+        <div class="col-md-8">
+
+
+            <h1 class="page-title">{{ page.title }}</h1>
+
+            <p>{{ page.descripcion }}</p>
+        </div>
+    </div>
+
+    <div id="map" style="height: 250px;"></div>
+
+
+
+    <div class="row justify-content-center">
+        <div class="col-11 col-md-4">
+            <form method="post">
+                <div class="form-group">
+                    <label for="name" class="label">Nombre y Apellidos</label>
+                    <input type="text" class="form-control form-control-lg" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="label">Email</label>
+                    <input type="text" class="form-control form-control-lg" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="label">Telefono</label>
+                    <input type="text" class="form-control form-control-lg" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="text" class="label">Mensaje</label>
+                    <textarea class="form-control" id="text" name="text" rows="3"></textarea>
+                </div>
+                <div class="form-group col-md-12 mt-3">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Enviar</button>
+                </div>
+
+            </form>
+        </div>
+        <br>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+<script>
+    var map = L.map('map').setView([{{ page.coord }}], 11);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1Ijoidml0bzAwIiwiYSI6ImNsMDZnZmZjejEwaGMza3BkdjdrMWJsdmwifQ.q6Tv9r6T0WBhjRwId7pnaA'
+    }).addTo(map);
+
+
+
+</script>
+{% endblock %}
