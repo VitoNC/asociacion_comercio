@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-comerciosindexpage{% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="row justify-content-center title-block-text">
+    <div class="col-md-8">
+
+
+        <h1 class="page-title">{{ page.title }}</h1>
+
+    </div>
+</div>
+
+    {% for comercio in self.get_children %}
+        <h2><a href="{% pageurl comercio %}">{{ comercio.title }}</a></h2>
+        <p>{{ comercio.descripcion }}</p>
+
+        <figure>
+            <img src="{{ comercio.imagen }}" width="100%" height="100%">
+            <figcaption>Prado</figcaption>
+        </figure>
+        
+    {% endfor %}
+    </div>
+{% endblock %}
+
