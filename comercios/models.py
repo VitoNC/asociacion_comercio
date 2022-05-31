@@ -98,23 +98,24 @@ class ServiciosPage(Page):
 
 
 ## Modelo para productos
+@register_snippet # Registrado como snippet
 class Producto(models.Model):
     name = models.CharField('name', max_length=250)
-    link = models.URLField()
+    url = models.URLField(blank=True)
     description = models.CharField(max_length=1000, blank=True)
     image = models.URLField()
     price = models.CharField(max_length=30, blank=True)
 
     panels = [
-        FieldPanel('title'),
-        FieldPanel('link'),
+        FieldPanel('name'),
         FieldPanel('description'),
-        FieldPanel('imagen'),
+        FieldPanel('url'),
+        FieldPanel('image'),
         FieldPanel('price'),
     ]
 
     def __str__(self):
-        return f'{self.name} ({self.price})'
+        return f'{self.name} ({self.price}€)'
 
 
 

@@ -12,10 +12,12 @@ from wagtail.snippets.models import register_snippet
 @register_snippet # Registrado como snippet
 class Noticia(models.Model):
     title = models.CharField('título', max_length=250)
+    topic = models.CharField(max_length=20, blank=True)
     subtitle = models.CharField(blank=True, max_length=250)
-    date = models.DateField()
+    url = models.URLField(blank=True)
+    date = models.CharField(blank=True, max_length=20)
     body = RichTextField(blank=True)
-    imagen = models.URLField()
+    imagen = models.URLField(blank=True)
 
 
     panels = [
@@ -24,10 +26,12 @@ class Noticia(models.Model):
         FieldPanel('date'),
         FieldPanel('body'),
         FieldPanel('imagen'),
+        FieldPanel('topic'),
+        FieldPanel('url')
     ]
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.title} ({self.topic})'
 
     class Meta:
         verbose_name_plural = 'noticias'
