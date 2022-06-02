@@ -25,10 +25,10 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 INSTALLED_APPS = [
 
-    "blog",
     "contacto",
     "noticias",
     "comercios",
+    "about_us",
 
     "home",
     "search",

@@ -1,0 +1,49 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% load wagtailcore_tags %} 
+{% block body_class %}template-aboutpage{% endblock %} 
+{% block extra_css %}
+<style>
+  .row {
+    padding: 10px;
+  }
+  .logo {
+    border: solid 4px #333;
+    padding: 15px;
+  }
+  .inner-content {
+    margin-top:20px;
+    margin-bottom:-40px;
+  }
+</style>
+
+{% endblock extra_css %}
+{% block body %}
+
+<div class="container">
+  <div class="row justify-content-center title-block-text">
+    <div class="col-md-12">
+      <div class="logo">
+        <img
+          src="https://st.depositphotos.com/63963752/56453/v/600/depositphotos_564531034-stock-illustration-acj-letter-logo-design-on.jpg"
+          width="30%"
+        />
+      </div>
+    </div>
+    <div class="inner-content">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <h2>¿QUÉ ES 'ACJ'?</h2>
+                <p>La Asociación de Comercios de la Jacetania 'ACJ' es un proyecto realizado con el objetivo de defender y promocionar el sector de comercio de la zona de Jaca y alrededores</p>
+            </div>
+            <div class="col-md-4">
+                <h2>EQUIPO</h2>
+                <p>Víctor Navarro Castillo (Informático Junior)</p>
+                <p>En colaboración con los distintos asociados al proyecto</p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

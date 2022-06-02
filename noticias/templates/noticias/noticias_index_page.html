@@ -1,27 +1,62 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags static %}
 
 {% block body_class %}template-noticiasindexpage{% endblock %}
+
+{% block extra_css %}
+<style>
+img {
+    width: 75%;
+}
+.paginator {
+    width: 30%;
+}
+</style>
+{% endblock %}
 
 {% block body %}
 
 <div class="container">
-    <h1 class="page-title">{{ page.title }}</h1>
+    <div class="row title-block-text">
+        <div class="col">
 
-    <h3 class="page-title">{{ page.introduccion|richtext }}</h3>
+            <h1 class="page-title">{{ page.title }}</h1><hr><hr>
+            {% for noticia in noticias %}
+            <ul class="noticias">
+                <li class="noticia row justify-content-center" style="list-style: none;">
+                    <div class="col-12 col-md-9 book-content">
+                        <div class="row">
+                            <div class="noticia-details col-4 col-sm-4 col-md-4">
+                                <h2 class="title">
+                                    <a href="{{noticia.url}}">{{noticia.title}}</a>
+                                </h2>
+                                <p><a href="#">{{noticia.topic}}</a></p>
+                            </div>
+                            <div class="noticia-image col-8 col-sm-8 col-md-8">
+                                <a href="{{noticia.url}}">
+                                    <img src="{{noticia.imagen}}" width="200px">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <hr>
+            {% endfor %}
 
-    {% for noticia in noticias %}
-    <a href="{{ noticia.url }}">
-        <h2>{{ noticia.title }}</h2>
-        {{ noticia.subtitle }}<br>
-        <img src="{{ noticia.imagen }}" width="100%">
-    </a>
-    <div class="page-subtitle">{{ noticia.date }}</div>
-    <hr>
-
-    {% endfor %}
+        </div>
+    </div>
 </div>
 
+{% if noticias.paginator.count > 1 %}
+<div class="container paginator">
+    <div class="row">
+        <div class="col-md-12">
+            {% include "includes/pagination.html" with subpages=noticias %}
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}

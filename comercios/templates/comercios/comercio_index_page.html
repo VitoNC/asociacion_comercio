@@ -4,27 +4,51 @@
 
 {% block body_class %}template-comerciosindexpage{% endblock %}
 
+{% block extra_css %}
+<style>
+.comercio {
+    border: solid 2px #333; padding: 10px;
+}
+.comercio-image {
+    background:#F9EBEA;
+    border:solid;
+}
+</style>
+{% endblock %}
+
 {% block body %}
+
 <div class="container">
-<div class="row justify-content-center title-block-text">
-    <div class="col-md-8">
+    <div class="row justify-content-center title-block-text">
+        <div class="col">
+            <h1 class="page-title">{{ page.title }}</h1><br>
+            {% for comercio in comercios %}
+            <ul class="comercios">
+                <li class="comercio row justify-content-center" style="list-style: none;">
+                    <div class="col-12 col-md-9 comercio-content">
+                        <div class="row">
+                            <div class="comercio-details col-4 col-sm-4 col-md-4">
+                                <h2 class="title">
+                                    <a href="{{comercio.url}}">{{comercio.name}}</a>
+                                </h2>
+                                <p>{{comercio.description | richtext}}</p>
+                            </div>
+                            <div class="col-8 col-sm-8 col-md-8">
+                                <a href="{{comercio.url}}">
+                                    <div class="comercio-image">
+                                    <img src="{{comercio.image}}"/>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            {% endfor %}
 
-
-        <h1 class="page-title">{{ page.title }}</h1>
-
+        </div>
     </div>
 </div>
 
-    {% for comercio in self.get_children %}
-        <h2><a href="{% pageurl comercio %}">{{ comercio.title }}</a></h2>
-        <p>{{ comercio.descripcion }}</p>
-
-        <figure>
-            <img src="{{ comercio.imagen }}" width="100%" height="100%">
-            <figcaption>Prado</figcaption>
-        </figure>
-        
-    {% endfor %}
-    </div>
 {% endblock %}
 

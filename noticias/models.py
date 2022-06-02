@@ -7,6 +7,9 @@ from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.snippets.models import register_snippet
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
 
 ## Modelo para noticias 
 @register_snippet # Registrado como snippet
@@ -46,11 +49,24 @@ class NoticiasIndexPage(Page):
         FieldPanel('introduccion', classname="full")
     ]
 
+    def paginate(self, request, noticias, *args):
+        page = request.GET.get('page')
+
+        paginator = Paginator(noticias, 2)
+
+        try:
+            pages = paginator.page(page)
+        except PageNotAnInteger:
+            pages = paginator.page(1)
+        except EmptyPage:
+            pages = paginator.page(paginator.num_pages)
+        return pages
+
+
     def get_context(self, request):
-        # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
 
-        noticias = Noticia.objects.all().order_by('-id')
+        noticias = self.paginate(request, Noticia.objects.all().order_by('-id'))
         context['noticias'] = noticias
         return context
 

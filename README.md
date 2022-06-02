@@ -56,3 +56,29 @@ $ python manage.py runserver
 This should show the Wagtail welcome page, and the deployment is finished.
 
 
+
+# Git Basics
+
+## Content Upload
+```bash
+$ git add <filename>
+$ git add *
+```
+```bash
+$ git commit -m "Commit message"
+```
+```bash
+$ git push origin master
+```
+
+## Content Download
+```bash
+$ git pull
+```
+
+## Branch Merge
+```bash
+$ git merge <branchname>
+```
+
+

@@ -25,32 +25,23 @@ class ComercioIndexPage(Page):
     ]
 
     def get_context(self, request):
-        # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
 
         categoria = request.GET.get('categoria')
         
-        if categoria == 'alimentacion':
-            entradas = ComercioAliPage.objects.live().order_by('-first_published_at')
-        elif categoria == 'hosteleria':
-            entradas = ComercioHosPage.objects.live().order_by('-first_published_at')
-        elif categoria == 'moda':
-            entradas = ComercioModPage.objects.live().order_by('-first_published_at')
-        elif categoria == 'servicios':
-            entradas = ServiciosPage.objects.live().order_by('-first_published_at')
-        else:
-            entradas = self.get_children().live().order_by('-first_published_at')
 
-        context['blogpages'] = entradas
+        entradas = Comercio.objects.all()
+
+        context['comercios'] = entradas
 
         return context
 
-    subpage_types = ['ComercioAliPage', 'ComercioHosPage', 'ComercioModPage', 'ServiciosPage']
+    subpage_types = ['ComercioPage']
 
 
 
 # Modelo Página Alimentación
-class ComercioAliPage(Page):
+class ComercioPage(Page):
 
     descripcion = models.CharField(blank=True, max_length=200)
     coord = models.CharField(blank=True, max_length=20)
@@ -72,29 +63,29 @@ class ComercioAliPage(Page):
 
     ]
 
-    parent_page_types = ['comercios.ComercioIndexPage']
-    subpage_types = []
 
-# Modelo Página Hosteleria
-class ComercioHosPage(Page):
+## Modelo para comercios
+@register_snippet # Registrado como snippet
+class Comercio(models.Model):
+    name = models.CharField('name', max_length=250)
+    coord = models.CharField(blank=True, max_length=20)
+    description = RichTextField(blank=True)
+    url = models.URLField(blank=True)
+    image = models.URLField()
+    categories = ParentalManyToManyField('comercios.ComercioCategory', blank=True)
 
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('coord'),
+        FieldPanel('description'),
+        FieldPanel('url'),
+        FieldPanel('image'),
+        FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
+    ]
 
-    parent_page_types = ['comercios.ComercioIndexPage']
-    subpage_types = []
+    def __str__(self):
+        return f'{self.name}'
 
-# Modelo Página Moda
-class ComercioModPage(Page):
-
-
-    parent_page_types = ['comercios.ComercioIndexPage']
-    subpage_types = []
-
-# Modelo Página Servicios
-class ServiciosPage(Page):
-
-
-    parent_page_types = ['comercios.ComercioIndexPage']
-    subpage_types = []
 
 
 ## Modelo para productos

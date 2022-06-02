@@ -39,7 +39,7 @@ for n1 in noticias:
     n.title = n1["title"]
     n.imagen = n1["img"]
     n.topic = n1["topic"]
-    n.url = "https://www.elperiodicodearagon.com/aragon/" + n1["url"]
+    n.url = "https://www.elperiodicodearagon.com" + n1["url"]
 
     n.save()
 
